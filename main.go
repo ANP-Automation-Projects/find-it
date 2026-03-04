@@ -185,5 +185,5 @@ func main() {
 		count++
 	}
 
-	fmt.Fprintf(os.Stderr, "\nDone — %d match(es) found.\n", count)
+	fmt.Fprintf(os.Stderr, "\nDone | %d match(es) found.\n", count)
 }
