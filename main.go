@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
+	"time"
 
 	"golang.org/x/sys/windows"
 )
@@ -124,6 +125,8 @@ func printUsageAndExit(errs []string) {
 }
 
 func main() {
+	start := time.Now()
+
 	typeFlag := flag.String("type", "", "REQUIRED. Search for 'file' or 'dir'")
 	extFlag := flag.String("ext", "", "REQUIRED when --type=file. Extension without dot (e.g. pst, txt)")
 	nameFlag := flag.String("name", "", "REQUIRED. Name pattern to match (supports * wildcard, e.g. prefix*, *infix*, *suffix)")
@@ -205,5 +208,10 @@ func main() {
 		count++
 	}
 
+	elapsed := time.Since(start)
+	h := int(elapsed.Hours())
+	m := int(elapsed.Minutes()) % 60
+	s := int(elapsed.Seconds()) % 60
 	fmt.Fprintf(os.Stderr, "\nDone | %d match(es) found.\n", count)
+	fmt.Fprintf(os.Stderr, "Time Taken: %02d:%02d:%02d\n", h, m, s)
 }
